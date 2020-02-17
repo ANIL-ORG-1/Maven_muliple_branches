@@ -1,25 +1,15 @@
 node('master') 
 {
-    stage('ContinuousDownload') 
+    stage('ContinuousDownload_Master') 
     {
        git 'https://github.com/intelliqittrainings/maven.git'
     }
-    stage('ContinuousBuild')
+    stage('ContinuousBuild_Master')
     {
         sh label: '', script: 'mvn package'
     }
-    stage('ContinuousDeployment')
+    stage('ContinuousDeployment_Master')
     {
         sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.92.242:/var/lib/tomcat8/webapps/testapp.war'
     }
-    stage('ContinuousTesting')
-    {
-        git 'https://github.com/intelliqittrainings/FunctionalTesting.git'
-        sh label: '', script: 'java -jar /home/ubuntu/.jenkins/workspace/ScriptedPipeline/testing.jar'
-    }
-    stage('ContinuousDelivery')
-    {
-       sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.88.41:/var/lib/tomcat8/webapps/prodapp.war' 
-    }
-    
 }
