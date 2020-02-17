@@ -6,6 +6,7 @@ node('master')
     }
     stage('ContinuousBuild_Loans')
     {
+sh label: '', script: 'mvn clean'
         sh label: '', script: 'mvn package'
     }
 }
